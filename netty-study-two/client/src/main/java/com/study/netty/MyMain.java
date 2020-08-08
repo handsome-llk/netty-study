@@ -9,7 +9,8 @@ import java.util.concurrent.TimeUnit;
 
 import com.study.netty.handle.AsyncTimeClientHandler;
 import com.study.netty.handle.TimeClientHandle;
-import com.study.netty.netty.echo.EchoClient;
+import com.study.netty.netty.delimiter.DelimiterClient;
+import com.study.netty.netty.fixedlength.FixedLengthClient;
 import com.study.netty.netty.netty.TimeClient;
 
 public class MyMain {
@@ -28,11 +29,16 @@ public class MyMain {
 		// NIOMain(args);
 		// AIOMain(args);
 		// NettyMain(port);
-		EchoMain(port, host);
+		// DelimiterMain(port, host);
+		FixedLengthMain(port, host);
 	}
 	
-	private static void EchoMain(int port, String host) throws InterruptedException {
-		new EchoClient().connect(port, host);
+	private static void FixedLengthMain(int port, String host) throws InterruptedException {
+		new FixedLengthClient().connect(port, host);
+	}
+	
+	private static void DelimiterMain(int port, String host) throws InterruptedException {
+		new DelimiterClient().connect(port, host);
 	}
 	
 	private static void NettyMain(int port) throws InterruptedException {

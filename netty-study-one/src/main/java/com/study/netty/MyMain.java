@@ -7,7 +7,8 @@ import java.net.Socket;
 import com.study.netty.handler.AsyncTimeServerHandler;
 import com.study.netty.handler.MultiplexerTimeServer;
 import com.study.netty.handler.TimeServerHandler;
-import com.study.netty.netty.echo.EchoServer;
+import com.study.netty.netty.delimiter.DelimiterServer;
+import com.study.netty.netty.fixedlength.FixedLengthServer;
 import com.study.netty.netty.netty.TimeServer;
 
 public class MyMain {
@@ -25,11 +26,16 @@ public class MyMain {
 		// NIOMain(args);
 		// AIOMain(args);
 		// NettyMain(port);
-		EchoMain(port);
+		// DelimiterMain(port);
+		FixedLengthMain(port);
 	}
 	
-	private static void EchoMain(int port) throws Exception {
-		new EchoServer().bind(port);
+	private static void FixedLengthMain(int port) throws Exception {
+		new FixedLengthServer().bind(port);
+	}
+	
+	private static void DelimiterMain(int port) throws Exception {
+		new DelimiterServer().bind(port);
 	}
 	
 	private static void NettyMain(int port) throws InterruptedException  {
