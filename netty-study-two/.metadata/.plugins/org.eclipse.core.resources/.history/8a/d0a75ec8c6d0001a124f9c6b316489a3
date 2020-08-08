@@ -1,0 +1,66 @@
+package com.study.netty.handle;
+
+import java.io.IOException;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
+import java.util.Iterator;
+import java.util.Set;
+
+public class TimeClientHandle implements Runnable {
+
+	private String host;
+	private int port;
+	private Selector selector;
+	private SocketChannel socketChannel;
+	private volatile boolean stop;
+	
+	public TimeClientHandle(String host, int port) {
+		this.host = host == null ? "127.0.0.1" : host;
+		this.port = port;
+		try {
+			selector = Selector.open();
+			socketChannel = SocketChannel.open();
+			socketChannel.configureBlocking(false);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+	
+	public void run() {
+		try {
+			doConnect();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		while(!stop) {
+			try {
+				selector.select(1000);
+				Set<SelectionKey> selectedKeys = selector.selectedKeys();
+				Iterator<SelectionKey> it = selectedKeys.iterator();
+				SelectionKey key = null;
+				while (it.hasNext()) {
+					key = it.next();
+//					System.out.println(it.next() == it.next());
+//					it.hasNext();
+//					System.out.println(key == it.next());
+					it.remove();
+					try {
+						handleInput(key);
+					} catch(Exception e) {
+						key.cancel();
+						if (key.channel() != null) {
+							key.channel().close();
+						}
+					}
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.exit(1);
+			}
+		}
+	}
+
+}

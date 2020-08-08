@@ -1,0 +1,14 @@
+package com.study.netty.netty.netty;
+
+import io.netty.bootstrap.Bootstrap;
+
+public class TimeClient {
+
+	public void connect(int port, String host) {
+		EventLoopGroup group = new NioEventLoopGroup();
+		try {
+			Bootstrap b = new Bootstrap();
+		}
+	}
+	
+}

@@ -1,0 +1,21 @@
+package com.study.netty.netty.netty;
+
+import java.util.logging.Logger;
+
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerAdapter;
+
+public class TimeClientHandler extends ChannelHandlerAdapter {
+
+	private static final Logger logger = Logger.getLogger(TimeClientHandler.class.getName());
+	
+	private final ByteBuf firstMessages;
+	
+	public TimeClientHandler() {
+		byte[] req = "QUERY TIME ORDER".getBytes();
+		firstMessages = Unpooled.buffer(req.length);
+		firstMessages.writeBytes(req);
+	}
+	
+}

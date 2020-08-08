@@ -1,0 +1,19 @@
+package com.study.netty.handle;
+
+import java.nio.channels.Selector;
+import java.nio.channels.SocketChannel;
+
+public class TimeClientHandle implements Runnable {
+
+	private String host;
+	private int port;
+	private Selector selector;
+	private SocketChannel socketChannel;
+	private volatile boolean stop;
+	
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+
+}
