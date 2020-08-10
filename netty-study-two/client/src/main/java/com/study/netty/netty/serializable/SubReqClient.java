@@ -1,8 +1,6 @@
-package com.study.netty.netty.echo;
+package com.study.netty.netty.serializable;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -10,10 +8,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.serialization.ClassResolvers;
+import io.netty.handler.codec.serialization.ObjectDecoder;
+import io.netty.handler.codec.serialization.ObjectEncoder;
 
-public class EchoClient {
+public class SubReqClient {
 
 	public void connect(int port, String host) throws InterruptedException {
 		EventLoopGroup group = new NioEventLoopGroup();
@@ -26,15 +25,16 @@ public class EchoClient {
 
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
-						ByteBuf delimiter = Unpooled.copiedBuffer("$_".getBytes());
-						ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiter));
-						ch.pipeline().addLast(new StringDecoder());
-						ch.pipeline().addLast(new EchoClientHandler());
+						ch.pipeline().addLast(new ObjectDecoder(1024, 
+								ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
+						ch.pipeline().addLast(new ObjectEncoder());
+						ch.pipeline().addLast(new SubReqClientHandler());
 					}
 					
 				});
 			
 			ChannelFuture f = b.connect(host, port).sync();
+			
 			f.channel().closeFuture().sync();
 		} finally {
 			group.shutdownGracefully();

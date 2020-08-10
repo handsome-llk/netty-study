@@ -12,6 +12,7 @@ import com.study.netty.handle.TimeClientHandle;
 import com.study.netty.netty.delimiter.DelimiterClient;
 import com.study.netty.netty.fixedlength.FixedLengthClient;
 import com.study.netty.netty.netty.TimeClient;
+import com.study.netty.netty.serializable.SubReqClient;
 
 public class MyMain {
 
@@ -30,7 +31,12 @@ public class MyMain {
 		// AIOMain(args);
 		// NettyMain(port);
 		// DelimiterMain(port, host);
-		FixedLengthMain(port, host);
+		// FixedLengthMain(port, host);
+		SubSerializableMain(port, host);
+	}
+	
+	private static void SubSerializableMain(int port, String host) throws InterruptedException {
+		new SubReqClient().connect(port, host);
 	}
 	
 	private static void FixedLengthMain(int port, String host) throws InterruptedException {

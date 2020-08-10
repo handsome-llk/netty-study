@@ -13,6 +13,7 @@ import com.study.netty.handler.TimeServerHandler;
 import com.study.netty.netty.delimiter.DelimiterServer;
 import com.study.netty.netty.fixedlength.FixedLengthServer;
 import com.study.netty.netty.netty.TimeServer;
+import com.study.netty.netty.serializable.SubReqServer;
 import com.study.netty.serializable.UserInfo;
 
 public class MyMain {
@@ -33,7 +34,12 @@ public class MyMain {
 		// DelimiterMain(port);
 		// FixedLengthMain(port);
 		// SerializableMain();
-		Serializable2Main();
+		// Serializable2Main();
+		SubSerializableMain(port);
+	}
+	
+	private static void SubSerializableMain(int port) throws InterruptedException {
+		new SubReqServer().bind(port);
 	}
 	
 	private static void Serializable2Main() throws IOException {
