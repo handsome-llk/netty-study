@@ -25,6 +25,18 @@ public class README {
 	 * 第一个路径是生成代码的存放路径，假设是path1；第二个路径是源文件路径，假设是path2。所以通用命令是
 	 * protoc.exe --java_out=path1 path2
 	 * 
+	 * 3、jar包
+	 * 
+	 * 加入生成的文件后发现编译报错，是因为缺少jar包。去mvnrepository.com找对应版本的jar包。这里用的2.5.0，所以使用一下依赖
+	 * <!-- https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java -->
+		<dependency>
+		    <groupId>com.google.protobuf</groupId>
+		    <artifactId>protobuf-java</artifactId>
+		    <version>2.5.0</version>
+		</dependency>
+
+	 * 
+	 * 
 	 * 
 	 */
 }

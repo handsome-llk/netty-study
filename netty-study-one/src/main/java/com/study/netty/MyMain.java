@@ -7,12 +7,16 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
+import com.google.protobuf.InvalidProtocolBufferException;
 import com.study.netty.handler.AsyncTimeServerHandler;
 import com.study.netty.handler.MultiplexerTimeServer;
 import com.study.netty.handler.TimeServerHandler;
 import com.study.netty.netty.delimiter.DelimiterServer;
 import com.study.netty.netty.fixedlength.FixedLengthServer;
 import com.study.netty.netty.netty.TimeServer;
+import com.study.netty.netty.protobuf.SubscribeReqProto;
+import com.study.netty.netty.protobuf.handler.ProtoSubReqServer;
+import com.study.netty.netty.protobuf.test.TestSubscribeReqProto;
 import com.study.netty.netty.serializable.SubReqServer;
 import com.study.netty.serializable.UserInfo;
 
@@ -35,7 +39,21 @@ public class MyMain {
 		// FixedLengthMain(port);
 		// SerializableMain();
 		// Serializable2Main();
-		SubSerializableMain(port);
+		// SubSerializableMain(port);
+		// ProtoSerializableMain();
+		ProtoMain(port);
+	}
+	
+	private static void ProtoMain(int port) throws InterruptedException {
+		new ProtoSubReqServer().bind(port);
+	}
+	
+	private static void ProtoSerializableMain() throws InvalidProtocolBufferException {
+		SubscribeReqProto.SubscribeReq req = TestSubscribeReqProto.createSubscribeReq();
+		System.out.println("Before encode : " + req.toString());
+		SubscribeReqProto.SubscribeReq req2 = TestSubscribeReqProto.decode(TestSubscribeReqProto.encode(req));
+		System.out.println("After decode : " + req.toString());
+		System.out.println("Asert equal : --> " + req2.equals(req));
 	}
 	
 	private static void SubSerializableMain(int port) throws InterruptedException {

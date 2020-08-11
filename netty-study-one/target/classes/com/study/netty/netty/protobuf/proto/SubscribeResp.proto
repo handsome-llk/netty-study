@@ -1,6 +1,6 @@
 syntax = "proto2";
 package netty;
-option java_package = "com.study.netty.protobuf";
+option java_package = "com.study.netty.netty.protobuf";
 option java_outer_classname = "SubscribeRespProto";
 
 message SubscribeResp {
