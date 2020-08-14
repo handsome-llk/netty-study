@@ -11,6 +11,7 @@ import com.study.netty.handle.AsyncTimeClientHandler;
 import com.study.netty.handle.TimeClientHandle;
 import com.study.netty.netty.delimiter.DelimiterClient;
 import com.study.netty.netty.fixedlength.FixedLengthClient;
+import com.study.netty.netty.jboss_marshalling.MarshallingSubReqClient;
 import com.study.netty.netty.netty.TimeClient;
 import com.study.netty.netty.protobuf.ProtoSubClient;
 import com.study.netty.netty.serializable.SubReqClient;
@@ -34,7 +35,12 @@ public class MyMain {
 		// DelimiterMain(port, host);
 		// FixedLengthMain(port, host);
 		// SubSerializableMain(port, host);
-		ProtoSubMain(port, host);
+		// ProtoSubMain(port, host);
+		MarshallingMain(port, host);
+	}
+	
+	private static void MarshallingMain(int port, String host) throws InterruptedException {
+		new MarshallingSubReqClient().connect(port, host);
 	}
 	
 	private static void ProtoSubMain(int port, String host) throws InterruptedException {

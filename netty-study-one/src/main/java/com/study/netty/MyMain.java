@@ -13,17 +13,19 @@ import com.study.netty.handler.MultiplexerTimeServer;
 import com.study.netty.handler.TimeServerHandler;
 import com.study.netty.netty.delimiter.DelimiterServer;
 import com.study.netty.netty.fixedlength.FixedLengthServer;
+import com.study.netty.netty.jboss_marshalling.MarshallingSubReqServer;
 import com.study.netty.netty.netty.TimeServer;
 import com.study.netty.netty.protobuf.SubscribeReqProto;
 import com.study.netty.netty.protobuf.handler.ProtoSubReqServer;
 import com.study.netty.netty.protobuf.test.TestSubscribeReqProto;
 import com.study.netty.netty.serializable.SubReqServer;
+import com.study.netty.protocol.http.HttpFileServer;
 import com.study.netty.serializable.UserInfo;
 
 public class MyMain {
 	
 	public static void main(String[] args) throws Exception {
-		int port = 8080;
+		int port = 1234;
 		if (args != null && args.length > 0) {
 			try {
 				port = Integer.valueOf(args[0]);
@@ -41,7 +43,18 @@ public class MyMain {
 		// Serializable2Main();
 		// SubSerializableMain(port);
 		// ProtoSerializableMain();
-		ProtoMain(port);
+		// ProtoMain(port);
+		// MarshallingMain(port);
+		HttpMain(port);
+	}
+	
+	private static void HttpMain(int port) throws InterruptedException {
+		String url = HttpFileServer.DEFAULT_URL;
+		new HttpFileServer().run(port, url);
+	}
+	
+	private static void MarshallingMain(int port) throws InterruptedException {
+		new MarshallingSubReqServer().bind(port);
 	}
 	
 	private static void ProtoMain(int port) throws InterruptedException {
