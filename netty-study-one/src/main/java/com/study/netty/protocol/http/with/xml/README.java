@@ -7,6 +7,8 @@ public class README {
 	 * 
 	 * https://www.runoob.com/xml/xml-tree.html
 	 * 
+	 * 简单来说，xml schema定义的是类的成员变量，其不包含具体的值
+	 * 
 	 */
 	
 }
