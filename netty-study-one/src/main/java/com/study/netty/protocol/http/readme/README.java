@@ -1,4 +1,4 @@
-package com.study.netty.protocol.http;
+package com.study.netty.protocol.http.readme;
 
 public class README {
 	/**

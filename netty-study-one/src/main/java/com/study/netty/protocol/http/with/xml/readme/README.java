@@ -1,4 +1,4 @@
-package com.study.netty.protocol.http.with.xml;
+package com.study.netty.protocol.http.with.xml.readme;
 
 public class README {
 

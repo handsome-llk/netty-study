@@ -45,7 +45,7 @@ public class MyMain {
 		// ProtoSerializableMain();
 		// ProtoMain(port);
 		// MarshallingMain(port);
-		HttpMain(port);
+		// HttpMain(port);
 	}
 	
 	private static void HttpMain(int port) throws InterruptedException {
