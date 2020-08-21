@@ -1,4 +1,4 @@
-package com.study.netty.protocol.http.xml.example.handler;
+package com.study.netty.protocol.http.xml.example.test;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -10,6 +10,7 @@ import org.jibx.runtime.IMarshallingContext;
 import org.jibx.runtime.IUnmarshallingContext;
 import org.jibx.runtime.JiBXException;
 
+import com.study.netty.protocol.http.xml.example.comm.OrderFactory;
 import com.study.netty.protocol.http.xml.example.pojo.Order;
 
 public class TestOrder {

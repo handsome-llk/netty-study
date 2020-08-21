@@ -1,4 +1,4 @@
-package com.study.netty.protocol.http.xml.example.handler;
+package com.study.netty.protocol.http.xml.example.comm;
 
 import com.study.netty.protocol.http.xml.example.pojo.Address;
 import com.study.netty.protocol.http.xml.example.pojo.Customer;
