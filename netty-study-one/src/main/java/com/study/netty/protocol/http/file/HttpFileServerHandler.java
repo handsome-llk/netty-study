@@ -1,4 +1,4 @@
-package com.study.netty.protocol.http;
+package com.study.netty.protocol.http.file;
 
 import static io.netty.handler.codec.http.HttpHeaders.isKeepAlive;
 import static io.netty.handler.codec.http.HttpHeaders.setContentLength;

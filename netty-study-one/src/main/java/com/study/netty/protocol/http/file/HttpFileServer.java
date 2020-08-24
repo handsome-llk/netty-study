@@ -1,4 +1,4 @@
-package com.study.netty.protocol.http;
+package com.study.netty.protocol.http.file;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -42,6 +42,7 @@ public class HttpFileServer {
 				});
 			
 			String host = "127.0.0.1";
+//			String host = "10.8.3.152";
 //			String host = "192.168.1.102";
 			ChannelFuture f = b.bind(host, port).sync();
 			System.out.println("HTTP 文件目录服务器启动，网址是 : " + host + ":" + port + url);

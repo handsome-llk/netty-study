@@ -6,6 +6,10 @@
   <artifactId>netty-study-one</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
+  <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
   <dependencies>
    
    <!-- netty权威指南用的是这个版本的jar包。官方已经废弃 -->

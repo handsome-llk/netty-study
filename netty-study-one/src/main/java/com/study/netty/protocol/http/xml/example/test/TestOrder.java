@@ -39,12 +39,12 @@ public class TestOrder {
 		return order;
 	}
 	
-	public static void main(String[] args) throws JiBXException, IOException {
-		TestOrder test = new TestOrder();
-		Order order = OrderFactory.create(123);
-		String body = test.encode2Xml(order);
-		Order order2 = test.decode2Order(body);
-		System.out.println(order2);
-	}
+//	public static void main(String[] args) throws JiBXException, IOException {
+//		TestOrder test = new TestOrder();
+//		Order order = OrderFactory.create(123);
+//		String body = test.encode2Xml(order);
+//		Order order2 = test.decode2Order(body);
+//		System.out.println(order2);
+//	}
 	
 }

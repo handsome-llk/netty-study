@@ -19,7 +19,7 @@ import com.study.netty.netty.protobuf.SubscribeReqProto;
 import com.study.netty.netty.protobuf.handler.ProtoSubReqServer;
 import com.study.netty.netty.protobuf.test.TestSubscribeReqProto;
 import com.study.netty.netty.serializable.SubReqServer;
-import com.study.netty.protocol.http.HttpFileServer;
+import com.study.netty.protocol.http.file.HttpFileServer;
 import com.study.netty.serializable.UserInfo;
 
 public class MyMain {
@@ -45,9 +45,14 @@ public class MyMain {
 		// ProtoSerializableMain();
 		// ProtoMain(port);
 		// MarshallingMain(port);
-		// HttpMain(port);
+		 HttpMain(port);
 	}
 	
+	/**
+	 * 文件服务器示例
+	 * @param port
+	 * @throws InterruptedException
+	 */
 	private static void HttpMain(int port) throws InterruptedException {
 		String url = HttpFileServer.DEFAULT_URL;
 		new HttpFileServer().run(port, url);
