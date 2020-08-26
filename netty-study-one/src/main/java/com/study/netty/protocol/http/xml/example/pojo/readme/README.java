@@ -68,6 +68,19 @@ public class README {
 					</execution>
 				</executions>
 			</plugin>
+			
+			<!-- 这一段是解决jdk源的问题 -->
+			<plugin> 
+			    <groupId>org.apache.maven.plugins</groupId> 
+			    <artifactId>maven-compiler-plugin</artifactId> 
+			    <version>3.1</version> 
+			    <configuration> 
+				    <source>1.8</source> 
+				    <target>1.8</target> 
+				    <encoding>UTF-8</encoding> 
+			    </configuration> 
+		    </plugin>
+			
 		</plugins>
 	  </build>
 	 * 
@@ -75,6 +88,12 @@ public class README {
 	 * 然后maven install，可以pojo对应的classes文件夹下生成类似  JiBX_bindingAddress_access.class  这样的文件
 	 * 
 	 * 
+	 */
+	
+	
+	/**
+	 * 关于强化class的问题，真的弄得我很头疼，测试服务器和客户端的时候一直没有相应。后来捣鼓半天发现是客户端的强化类有问题。
+	 * 所以又重新生成了客户端的强化类，才走通了流程
 	 */
 	
 }

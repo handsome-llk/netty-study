@@ -20,6 +20,7 @@ import com.study.netty.netty.protobuf.handler.ProtoSubReqServer;
 import com.study.netty.netty.protobuf.test.TestSubscribeReqProto;
 import com.study.netty.netty.serializable.SubReqServer;
 import com.study.netty.protocol.http.file.HttpFileServer;
+import com.study.netty.protocol.http.xml.example.comm.HttpXmlServer;
 import com.study.netty.serializable.UserInfo;
 
 public class MyMain {
@@ -45,7 +46,17 @@ public class MyMain {
 		// ProtoSerializableMain();
 		// ProtoMain(port);
 		// MarshallingMain(port);
-		 HttpMain(port);
+		// HttpMain(port);
+		HttpXmlMain(port);
+	}
+	
+	/**
+	 * http协议，xml示例
+	 * @param port
+	 * @throws InterruptedException
+	 */
+	private static void HttpXmlMain(int port) throws InterruptedException {
+		new HttpXmlServer().run(port);
 	}
 	
 	/**

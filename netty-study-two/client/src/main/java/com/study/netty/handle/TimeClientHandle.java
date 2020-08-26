@@ -99,7 +99,7 @@ public class TimeClientHandle implements Runnable {
 					key.cancel();
 					sc.close();
 				} else {
-					// ¶Áµ½0×Ö½Ú£¬ºöÂÔ
+					// å¿½ç•¥
 				}
 			}
 		}

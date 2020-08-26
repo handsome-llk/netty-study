@@ -15,11 +15,12 @@ import com.study.netty.netty.jboss_marshalling.MarshallingSubReqClient;
 import com.study.netty.netty.netty.TimeClient;
 import com.study.netty.netty.protobuf.ProtoSubClient;
 import com.study.netty.netty.serializable.SubReqClient;
+import com.study.netty.protocol.http.xml.example.comm.HttpXmlClient;
 
 public class MyMain {
 
 	public static void main(String[] args) throws InterruptedException {
-		int port = 8080;
+		int port = 1234;
 		String host = "127.0.0.1";
 		if (args != null && args.length > 0) {
 			try {
@@ -36,7 +37,18 @@ public class MyMain {
 		// FixedLengthMain(port, host);
 		// SubSerializableMain(port, host);
 		// ProtoSubMain(port, host);
-		MarshallingMain(port, host);
+		// MarshallingMain(port, host);
+		HttpXmlMain(port, host);
+	}
+	
+	/**
+	 * http协议，使用xml传输数据
+	 * @param port
+	 * @param host
+	 * @throws InterruptedException
+	 */
+	private static void HttpXmlMain(int port, String host) throws InterruptedException {
+		new HttpXmlClient().connect(port, host);
 	}
 	
 	private static void MarshallingMain(int port, String host) throws InterruptedException {
