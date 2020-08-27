@@ -21,6 +21,7 @@ import com.study.netty.netty.protobuf.test.TestSubscribeReqProto;
 import com.study.netty.netty.serializable.SubReqServer;
 import com.study.netty.protocol.http.file.HttpFileServer;
 import com.study.netty.protocol.http.xml.example.comm.HttpXmlServer;
+import com.study.netty.protocol.websocket.example.handler.WebSocketServer;
 import com.study.netty.serializable.UserInfo;
 
 public class MyMain {
@@ -47,7 +48,17 @@ public class MyMain {
 		// ProtoMain(port);
 		// MarshallingMain(port);
 		// HttpMain(port);
-		HttpXmlMain(port);
+		// HttpXmlMain(port);
+		WebSocketMain(port);
+	}
+	
+	/**
+	 * webSocket协议
+	 * @param port
+	 * @throws InterruptedException
+	 */
+	private static void WebSocketMain(int port) throws InterruptedException {
+		new WebSocketServer().run(port);
 	}
 	
 	/**
