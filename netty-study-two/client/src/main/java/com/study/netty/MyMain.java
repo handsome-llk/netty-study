@@ -16,6 +16,7 @@ import com.study.netty.netty.netty.TimeClient;
 import com.study.netty.netty.protobuf.ProtoSubClient;
 import com.study.netty.netty.serializable.SubReqClient;
 import com.study.netty.protocol.http.xml.example.comm.HttpXmlClient;
+import com.study.netty.protocol.udp.ChineseProverbClient;
 
 public class MyMain {
 
@@ -38,7 +39,12 @@ public class MyMain {
 		// SubSerializableMain(port, host);
 		// ProtoSubMain(port, host);
 		// MarshallingMain(port, host);
-		HttpXmlMain(port, host);
+		// HttpXmlMain(port, host);
+		UdpMain(port);
+	}
+	
+	private static void UdpMain(int port) throws InterruptedException {
+		new ChineseProverbClient().run(port);
 	}
 	
 	/**

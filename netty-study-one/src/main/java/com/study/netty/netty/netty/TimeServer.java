@@ -10,6 +10,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 public class TimeServer {
 	
 	public void bind(int port) throws InterruptedException {
+		// 创建两个EventLoopGroup的原因是一个用于服务端接受客户端的连接，另一个用于进行SocketChannel的网络读写
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workerGroup = new NioEventLoopGroup();
 		try {

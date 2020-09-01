@@ -21,6 +21,7 @@ import com.study.netty.netty.protobuf.test.TestSubscribeReqProto;
 import com.study.netty.netty.serializable.SubReqServer;
 import com.study.netty.protocol.http.file.HttpFileServer;
 import com.study.netty.protocol.http.xml.example.comm.HttpXmlServer;
+import com.study.netty.protocol.udp.example.handler.ChineseProverbServer;
 import com.study.netty.protocol.websocket.example.handler.WebSocketServer;
 import com.study.netty.serializable.UserInfo;
 
@@ -49,7 +50,12 @@ public class MyMain {
 		// MarshallingMain(port);
 		// HttpMain(port);
 		// HttpXmlMain(port);
-		WebSocketMain(port);
+		// WebSocketMain(port);
+		UdpMain(port);
+	}
+	
+	private static void UdpMain(int port) throws InterruptedException {
+		new ChineseProverbServer().run(port);
 	}
 	
 	/**
