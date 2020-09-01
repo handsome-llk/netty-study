@@ -49,7 +49,7 @@ public class WebSocketServerHandler extends SimpleChannelInboundHandler<Object> 
 	}
 	
 	private void handleHttpRequest(ChannelHandlerContext ctx, FullHttpRequest req) {
-		if (!req.getDecoderResult().isSuccess() || (!"webSocket".equals(req.headers().get("Upgrade")))) {
+		if (!req.getDecoderResult().isSuccess() || (!"webSocket".equalsIgnoreCase(req.headers().get("Upgrade")))) {
 			sendHttpResponse(ctx, req, new DefaultFullHttpResponse(HTTP_1_1, BAD_REQUEST));
 			return;
 		}

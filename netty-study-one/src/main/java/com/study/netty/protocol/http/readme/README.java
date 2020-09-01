@@ -10,8 +10,5 @@ public class README {
 	 * 404	路径错误
 	 * 500	服务端代码错误
 	 * 
-	 * 这个例子好厉害啊，我用的这个路径
-	 * http://127.0.0.1:1234/src/main/java/com/study/netty/netty/protobuf/
-	 * 
 	 */
 }
