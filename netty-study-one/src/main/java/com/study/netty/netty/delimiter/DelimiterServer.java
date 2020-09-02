@@ -30,6 +30,7 @@ public class DelimiterServer {
 
 					@Override
 					protected void initChannel(SocketChannel ch) throws Exception {
+						// DelimiterBasedFrameDecoder 是使用分隔符来解决粘包、拆包问题
 						ByteBuf delimiter = Unpooled.copiedBuffer("$_".getBytes());
 						ch.pipeline().addLast(new DelimiterBasedFrameDecoder(1024, delimiter));
 						ch.pipeline().addLast(new StringDecoder());

@@ -19,6 +19,7 @@ import com.study.netty.netty.protobuf.SubscribeReqProto;
 import com.study.netty.netty.protobuf.handler.ProtoSubReqServer;
 import com.study.netty.netty.protobuf.test.TestSubscribeReqProto;
 import com.study.netty.netty.serializable.SubReqServer;
+import com.study.netty.protocol.file.handler.FileServer;
 import com.study.netty.protocol.http.file.HttpFileServer;
 import com.study.netty.protocol.http.xml.example.comm.HttpXmlServer;
 import com.study.netty.protocol.udp.example.handler.ChineseProverbServer;
@@ -51,9 +52,24 @@ public class MyMain {
 		// HttpMain(port);
 		// HttpXmlMain(port);
 		// WebSocketMain(port);
-		UdpMain(port);
+		// UdpMain(port);
+		FileMain(port);
 	}
 	
+	/**
+	 * 文件传输
+	 * @param port
+	 * @throws InterruptedException 
+	 */
+	private static void FileMain(int port) throws InterruptedException {
+		new FileServer().run(port);
+	}
+	
+	/**
+	 * udp协议
+	 * @param port
+	 * @throws InterruptedException
+	 */
 	private static void UdpMain(int port) throws InterruptedException {
 		new ChineseProverbServer().run(port);
 	}
