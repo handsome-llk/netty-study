@@ -19,6 +19,7 @@ import com.study.netty.netty.protobuf.SubscribeReqProto;
 import com.study.netty.netty.protobuf.handler.ProtoSubReqServer;
 import com.study.netty.netty.protobuf.test.TestSubscribeReqProto;
 import com.study.netty.netty.serializable.SubReqServer;
+import com.study.netty.protocol.custom.CustomServer;
 import com.study.netty.protocol.file.handler.FileServer;
 import com.study.netty.protocol.http.file.HttpFileServer;
 import com.study.netty.protocol.http.xml.example.comm.HttpXmlServer;
@@ -53,7 +54,17 @@ public class MyMain {
 		// HttpXmlMain(port);
 		// WebSocketMain(port);
 		// UdpMain(port);
-		FileMain(port);
+		// FileMain(port);
+		CustomMain();
+	}
+	
+	/**
+	 * 自定义协议栈
+	 * @param port
+	 * @throws InterruptedException 
+	 */
+	private static void CustomMain() throws InterruptedException {
+		new CustomServer().bind();
 	}
 	
 	/**

@@ -15,13 +15,14 @@ import com.study.netty.netty.jboss_marshalling.MarshallingSubReqClient;
 import com.study.netty.netty.netty.TimeClient;
 import com.study.netty.netty.protobuf.ProtoSubClient;
 import com.study.netty.netty.serializable.SubReqClient;
+import com.study.netty.protocol.custom.CustomClient;
 import com.study.netty.protocol.http.xml.example.comm.HttpXmlClient;
 import com.study.netty.protocol.udp.ChineseProverbClient;
 
 public class MyMain {
 
 	public static void main(String[] args) throws InterruptedException {
-		int port = 1234;
+		int port = 8080;
 		String host = "127.0.0.1";
 		if (args != null && args.length > 0) {
 			try {
@@ -40,9 +41,25 @@ public class MyMain {
 		// ProtoSubMain(port, host);
 		// MarshallingMain(port, host);
 		// HttpXmlMain(port, host);
-		UdpMain(port);
+		// UdpMain(port);
+		CustomMain(port, host);
 	}
 	
+	/**
+	 * 自定义协议栈
+	 * @param port
+	 * @param host
+	 * @throws InterruptedException 
+	 */
+	private static void CustomMain(int port, String host) throws InterruptedException {
+		new CustomClient().connect(port, host);
+	}
+	
+	/**
+	 * udp协议
+	 * @param port
+	 * @throws InterruptedException
+	 */
 	private static void UdpMain(int port) throws InterruptedException {
 		new ChineseProverbClient().run(port);
 	}
