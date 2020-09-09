@@ -17,6 +17,7 @@ public class HeartBeatReqHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) {
 		NettyMessage message = (NettyMessage) msg;
+		// 握手成功，主动发送心跳消息
 		if (message.getHeader() != null 
 				&& message.getHeader().getType() == MessageType.LOGIN_RESP.value()) {
 			heartBeat = ctx.executor().scheduleAtFixedRate(

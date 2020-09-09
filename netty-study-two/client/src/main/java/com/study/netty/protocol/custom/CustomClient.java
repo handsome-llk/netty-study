@@ -26,7 +26,7 @@ public class CustomClient {
 	private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 	EventLoopGroup group = new NioEventLoopGroup();
 	
-	public void connect(int port, String host) throws InterruptedException {
+	public void connect() throws InterruptedException {
 		try {
 			Bootstrap b = new Bootstrap();
 			b.group(group)
@@ -39,7 +39,7 @@ public class CustomClient {
 						ch.pipeline()
 							.addLast("MessageDecoder", new NettyMessageDecoder(1024 * 1024, 4, 4))
 							.addLast("MessageEncoder", new NettyMessageEncoder())
-							.addLast("readTimeoutHandler", new ReadTimeoutHandler(50))
+							.addLast("readTimeoutHandler", new ReadTimeoutHandler(10))
 							.addLast("LoginAuthHandler", new LoginAuthReqHandler())
 							.addLast("HeartBeatHandler", new HeartBeatReqHandler());
 					}
@@ -48,7 +48,7 @@ public class CustomClient {
 			
 			// 发起异步连接操作
 			ChannelFuture future = b.connect(
-					new InetSocketAddress(host, port),
+					new InetSocketAddress(NettyConstant.REMOTEIP, NettyConstant.PORT),
 					new InetSocketAddress(NettyConstant.LOCALIP, NettyConstant.LOCAL_PORT)).sync();
 			
 			future.channel().closeFuture().sync();
@@ -61,7 +61,7 @@ public class CustomClient {
 						TimeUnit.SECONDS.sleep(5);
 						try {
 							// 发起重连操作
-							connect(NettyConstant.PORT, NettyConstant.REMOTEIP);
+							connect();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}

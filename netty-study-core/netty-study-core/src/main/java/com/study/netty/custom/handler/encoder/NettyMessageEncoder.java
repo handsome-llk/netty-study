@@ -37,7 +37,7 @@ public class NettyMessageEncoder extends MessageToMessageEncoder<NettyMessage> {
 		Object value = null;
 		for (Map.Entry<String, Object> param : msg.getHeader().getAttachment().entrySet()) {
 			key = param.getKey();
-			keyArray = key.getBytes();
+			keyArray = key.getBytes("UTF-8");
 			sendBuf.writeInt(keyArray.length);
 			sendBuf.writeBytes(keyArray);
 			value = param.getValue();

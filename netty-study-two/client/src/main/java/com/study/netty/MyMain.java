@@ -22,7 +22,7 @@ import com.study.netty.protocol.udp.ChineseProverbClient;
 public class MyMain {
 
 	public static void main(String[] args) throws InterruptedException {
-		int port = 8080;
+		int port = 1234;
 		String host = "127.0.0.1";
 		if (args != null && args.length > 0) {
 			try {
@@ -42,7 +42,7 @@ public class MyMain {
 		// MarshallingMain(port, host);
 		// HttpXmlMain(port, host);
 		// UdpMain(port);
-		CustomMain(port, host);
+		CustomMain();
 	}
 	
 	/**
@@ -51,8 +51,8 @@ public class MyMain {
 	 * @param host
 	 * @throws InterruptedException 
 	 */
-	private static void CustomMain(int port, String host) throws InterruptedException {
-		new CustomClient().connect(port, host);
+	private static void CustomMain() throws InterruptedException {
+		new CustomClient().connect();
 	}
 	
 	/**
