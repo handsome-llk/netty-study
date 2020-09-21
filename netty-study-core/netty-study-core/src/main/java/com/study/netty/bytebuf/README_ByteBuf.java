@@ -114,11 +114,15 @@ public class README_ByteBuf {
 	 * 
 	 * isDirect方法（是否是基于直接内存实现）：如果是基于堆内存实现的ByteBuf，它返回false
 	 * 
-	 * hasArray方法：由于UnpooledHeapByteBuf基于字节数组实现，所以它的返回值是true。按我的理解，基于
-	 * 对象池实现的子类是不用数组的，普通的ByteBuf子类是基于数组实现的
+	 * hasArray方法：由于UnpooledHeapByteBuf基于字节数组实现，所以它的返回值是true
 	 * 
 	 * array方法：由于UnpooledHeapByteBuf基于字节数组实现，所以它的返回值是内部的字节数组成员变量。在调用array方法前，
 	 * 一般会调用hasArray方法进行判断
+	 * 
+	 */
+	
+	/**
+	 * PooledByteBuf内存池原理，没看懂，后面有时间再研究研究。lilktodo
 	 * 
 	 */
 	
@@ -131,16 +135,20 @@ public class README_ByteBuf {
 	 * 
 	 * AbstractReferenceCountedByteBuf -> PooledByteBuf
 	 * 
-	 * AbstractReferenceCountedByteBuf -> PooledDirectByteBuf
+	 * AbstractReferenceCountedByteBuf -> PooledByteBuf -> PooledDirectByteBuf
 	 * 
 	 * 以及一些相关辅助类：
 	 * ByteBufHolder、ByteBufAllocator、CompositeByteBuf、ByteBufUtil
 	 * 
+	 * 简单介绍一下：
+	 * ByteBufHolder：对ByteBuf的封装，它包含了一个ByteBuf，并且可以灵活的搭配其他方法进行扩展
+	 * 
+	 * ByteBufAllocator：字节缓冲区分配器，按照netty的缓冲区实现不同，共有两种不同的分配器
+	 * 
+	 * CompositeByteBuf：将多个ByteBuf的实例组装到一起，形成一个统一的视图。（具体没明白干啥用的，用到了再说）
+	 * 
+	 * ByteBufUtil：提供了一系列静态方法用于操作ByteBuf对象。最有用的方法是对字符串的编码和解码。
+	 * 
 	 */
-	
-	public static void main(String[] args) {
-		ByteBuf byteBuf = Unpooled.buffer();
-	}
-	
 	
 }
