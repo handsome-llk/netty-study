@@ -1,5 +1,8 @@
 package com.study.netty.bytebuf;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
 public class README_ByteBuf {
 
 	/**
@@ -33,5 +36,111 @@ public class README_ByteBuf {
 	 * 
 	 * 
 	 */
+	
+	
+	/**
+	 * mark、rest
+	 * 
+	 * ByteBuffer mark会将position被分到mark，调用rest会将mark还原至position。
+	 * 如果调用rest时，mark<0则会报错。
+	 * 
+	 * 
+	 * ByteBuf中也有相关操作
+	 * markReaderIndex、resetReaderIndex、markWriterIndex、resetWriterIndex
+	 * 备份readerIndex的变量是markedReaderIndex，备份writerIndex的变量是markedWriterIndex
+	 * 
+	 * 
+	 */
+	
+	/**
+	 * byteBuf的复制
+	 * 
+	 * 有三种方法
+	 * duplicate、slice、slice(int index, int length)
+	 * copy、copy(int index, int length)
+	 * 
+	 * duplicate和slice复制的内容和原内容指向同一份内容
+	 * copy复制的内容和原内容是相互独立的
+	 * 
+	 * duplicate和slice的区别：
+	 * duplicate复制的整个原始byteBuf，而slice复制的是position到limit之间的内容
+	 * 
+	 */
+	
+	/**
+	 * byteBuf转换为ByteBuffer
+	 * 
+	 * nioBuffer、nioBuffer(int index, int length)
+	 * 
+	 */
+	
+
+	/**
+	 * byteBuf随机读写get、set
+	 * 
+	 * 按我的理解，随机读写就是可以指定索引读写，即往原有内容中间插入新内容
+	 * 但是值得注意的是，随机读写会进行索引合法性检查，需要注意，不然会报错哦
+	 * 
+	 */
+	
+	/**
+	 * 从内存分配角度看，byteBuf分为两类
+	 * 
+	 * 堆内存(HeapByteBuf)和直接内存(DirectByteBuf)
+	 * 
+	 * 堆内存字节缓冲区：特点是内存的分配和回收速度快，可以被jvm自动回收；缺点就是如果进行socket的i/o读写，需要额外做一次内存复制，将
+	 * 堆内存对应的缓冲区复制到内核Channel中，性能会有一定程度的下降。
+	 * 
+	 * 直接内存字节缓冲区：非堆内存，它在对外进行内存分配，相比于堆内存，它的分配和回收速度会慢一些，但是将它写入或者从socket channel中
+	 * 读取时，由于少一次内存复制，速度比堆内存快
+	 * 
+	 * 经验表明，buteBuf的最佳实践是在i/o通信线程的读写缓冲区使用DirectByteBuf，后端业务消息的编解码模块使用HeapByteBuf，这样
+	 * 组合可以达到性能最优。
+	 * 
+	 * 从内存回收角度看，byteBuf也分为两类
+	 * 
+	 * 基于对象池的ByteBuf和普通的ByteBuf
+	 * 
+	 */
+	
+	/**
+	 * 这里想说一下netty源码里的一些参数，好好看的话其实很容易理解他们的意思
+	 * 比如minNewCapacity,最小的新的空间等等，所以不要停止思考
+	 * 
+	 */
+	
+	/**
+	 * ByteBuf中的一些接口是跟具体子类实现相关的，不同的子类功能是不同的
+	 * 
+	 * isDirect方法（是否是基于直接内存实现）：如果是基于堆内存实现的ByteBuf，它返回false
+	 * 
+	 * hasArray方法：由于UnpooledHeapByteBuf基于字节数组实现，所以它的返回值是true。按我的理解，基于
+	 * 对象池实现的子类是不用数组的，普通的ByteBuf子类是基于数组实现的
+	 * 
+	 * array方法：由于UnpooledHeapByteBuf基于字节数组实现，所以它的返回值是内部的字节数组成员变量。在调用array方法前，
+	 * 一般会调用hasArray方法进行判断
+	 * 
+	 */
+	
+	/**
+	 * 
+	 * netty权威指南讲解的byteBuf部分主要涉及
+	 * ByteBuf -> AbstractByteBuf -> AbstractReferenceCountedByteBuf
+	 * 
+	 * AbstractReferenceCountedByteBuf -> UnpooledHeapByteBuf
+	 * 
+	 * AbstractReferenceCountedByteBuf -> PooledByteBuf
+	 * 
+	 * AbstractReferenceCountedByteBuf -> PooledDirectByteBuf
+	 * 
+	 * 以及一些相关辅助类：
+	 * ByteBufHolder、ByteBufAllocator、CompositeByteBuf、ByteBufUtil
+	 * 
+	 */
+	
+	public static void main(String[] args) {
+		ByteBuf byteBuf = Unpooled.buffer();
+	}
+	
 	
 }
