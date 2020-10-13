@@ -1,4 +1,4 @@
-package com.study.netty.channel;
+package com.study.netty.study.channel;
 
 public class README_Channel_Method {
 

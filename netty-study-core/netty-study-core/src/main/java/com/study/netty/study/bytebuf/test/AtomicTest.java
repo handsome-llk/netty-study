@@ -1,4 +1,4 @@
-package com.study.netty.bytebuf.test;
+package com.study.netty.study.bytebuf.test;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicIntegerFieldUpdater;

@@ -1,4 +1,4 @@
-package com.study.netty.bytebuf.nio.bytebuffer;
+package com.study.netty.study.bytebuf.nio.bytebuffer;
 
 public class README_ByteBuffer {
 
