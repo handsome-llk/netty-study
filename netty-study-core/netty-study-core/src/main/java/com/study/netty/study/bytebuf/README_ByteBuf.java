@@ -151,4 +151,10 @@ public class README_ByteBuf {
 	 * 
 	 */
 	
+	/**
+	 * 动态扩展
+	 * 
+	 * 可以研究UnpooledHeapByteBuf的capacity(int newCapacity)这个方法
+	 */
+	
 }
