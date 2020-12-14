@@ -18,17 +18,18 @@ public class AtomicTest {
 	private static final CountDownLatch countDownLatch = new CountDownLatch(length);
 	
 	
-//	public static void main(String[] args) throws InterruptedException {
-//		final AtomicTest num = new AtomicTest();
-//		for (int i = 0; i < length; i++) {
-//			new Thread(() -> {
-//				update.compareAndSet(num, num.a, num.a + 1);
-//				countDownLatch.countDown();
-//			}).start(); 
-//		}
-//		
-//		countDownLatch.await();
-//		System.out.println(num.a);
-//		System.out.println(num.b);
-//	}
+	public static void main(String[] args) throws InterruptedException {
+		final AtomicTest num = new AtomicTest();
+		for (int i = 0; i < length; i++) {
+			new Thread(() -> {
+				update.compareAndSet(num, num.a, num.a + 1);
+				countDownLatch.countDown();
+			}).start(); 
+		}
+		
+		countDownLatch.await();
+		System.out.println(num.a);
+		System.out.println(num.b);
+		
+	}
 }
