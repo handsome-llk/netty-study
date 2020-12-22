@@ -108,6 +108,42 @@ public class README_ChannelHandler {
 	 * 
 	 */
 	
+	/**
+	 * MessageToMessageEncoder
+	 * 
+	 * 将一个POJO对象编码成另一个对象，以HTTP+XML协议为例，它的一种实现方式是：先将POJO对象编码成XML字符串，再将字符串编码为HTTP请求或者应答消息。
+	 * 对于复杂协议，往往需要经历多次编码，为了便于功能扩展，可以通过多个编码其组合来实现相关功能。
+	 * 
+	 * 用户的解码器继承继承MessageToMessageEncoder解码器，实现void encode(ChannelHandlerContect ctx, I msg, List<Object> out)
+	 * 方法即可。注意，它与MessageToByteEncoder的区别是输出是对象列表而不是ByteBuf。
+	 * 
+	 * 我的理解就是入参里的List<Object> out
+	 * 
+	 */
+	
+	/**
+	 * LengthFieldPrepender
+	 * 
+	 * 如果协议中的第一个字段为长度字段，Netty提供了LengthFieldPrepender编码其，它可以计算当前待发送消息的二进制字节长度，将该长度添加到
+	 * ByteBuf的缓冲区头中
+	 * 
+	 * (12 bytes)                  (14 bytes)
+	 * +----------------+          +--------+----------------+
+	 * | "HELLO,WORLD"  |          | 0x000C | "HELLO,WORLD"  |
+	 * +----------------+          +--------+----------------+
+	 * 
+	 * 通过LengthFieldPrepender可以将带发送消息的长度写入到ByteBuf的前两个字节，编码后的消息组成为长度字段+原消息的方式。
+	 * 
+	 * 通过设置LengthFieldPrepender为true，消息长度将包含长度本身占用的字节数，打开LengthFieldPrepender后
+	 * 
+	 * (12 bytes)                  (14 bytes)
+	 * +----------------+          +--------+----------------+
+	 * | "HELLO,WORLD"  |          | 0x000E | "HELLO,WORLD"  |
+	 * +----------------+          +--------+----------------+
+	 * 
+	 * 注意看，长度域的值变了哦
+	 * 
+	 */
 }
 
 
