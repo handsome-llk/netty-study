@@ -144,6 +144,41 @@ public class README_ChannelHandler {
 	 * 注意看，长度域的值变了哦
 	 * 
 	 */
+	
+	/**
+	 * ByteToMessageDecoder 源码分析
+	 * 
+	 * ChannelRead
+	 * 首先判断需要解码的msg对象是否是ByteBuf，如果是ByteBuf才需要进行解码，否则直接透传
+	 * 源码挺简单的，有啥变量不懂，百度翻一下基本能看懂。
+	 * 但是这里说明下，这里源码的内存扩展没有采用倍增或者步进的方式，分配的缓冲区恰恰够用，此处读到算法可以优化下，以防止连续半包导致的频繁缓冲区扩展
+	 * 和内存复制。
+	 * 
+	 * 这个方法点进来后有个callDecode方法需要说明下。
+	 * 这里是循环使用decode抽象去解码，如果当前的ChannelHandlerContext已经被移除，则不能继续进行解码，直接退出循环；如果输出的out列表长度
+	 * 没有变化，说明解码没有成功，需要针对一下不同场景进行判断。
+	 * 1、如果用户解码器没有消费ByteBuf，则说明十个半包消息，需要由I/O线程继续读取后续的数据报，在这种场景下要退出循环
+	 * 2、如果用户解码器消费了ByteBuf，说明可以解码可以继续进行
+	 * 
+	 * 从这里可以看出一个问题，业务解码器需要遵守Netty的某些契约，解码器才能正常工作，否则可能会导致功能错误，最重要的契约就是：如果业务解码器认为当前
+	 * 的字节缓冲区无法完成业务层的解码，需要将readIndex复位，告诉Netty解码条件不满足应当退出解码，继续读取数据报。代码中的反应是in.readableBytes。
+	 * 如果需要复位的话，逻辑可以参考ReplayingDecoder(ByteToMessageDecoder的子类)下的callDecode方法。
+	 * 
+	 * 3、如果用户解码器没有消费ByteBuf，但是却解码出了一个或者多个对象，这种行为被认为是非法的，需要抛出DecoderException异常
+	 * 4、最后通过isSingleDecoder进行判断，如果是单条消息解码器，第一次解码完成之后就退出循环
+	 * 
+	 */
+	
+	
+	/**
+	 * MessageToMessageDecoder 源码分析
+	 * 
+	 * channelRead
+	 * 里面有一个内容可以学习的样子，就是acceptInboundMessage方法中的匹配方法。
+	 * 按我的理解。。它这个是和泛型匹配的
+	 * 
+	 */
+	
 }
 
 
