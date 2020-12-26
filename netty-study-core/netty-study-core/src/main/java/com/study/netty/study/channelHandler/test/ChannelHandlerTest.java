@@ -5,7 +5,6 @@ import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 public class ChannelHandlerTest {
 
 	public static void main(String[] args) {
-		LengthFieldBasedFrameDecoder
 	}
 	
 }

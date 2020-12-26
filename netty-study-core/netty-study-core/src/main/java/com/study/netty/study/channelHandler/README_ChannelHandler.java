@@ -98,6 +98,16 @@ public class README_ChannelHandler {
 	 * 在pipeline中增加LengthFieldBasedFrameDecoder解码器，指定正确的参数组合，它可以将Netty的ByteBuf解码成单个的整包消息，
 	 * 后面的业务解码器拿到的就是个完整的数据报，正常进行解码即可，不再需要额外考虑"读半包"问题，方便了业务消息的解码。
 	 * 
+	 * 看了后面的代码发现lengthFieldLength这个字段的值表示长度域的这个参数是什么类型
+	 * 1	字节byte
+	 * 2	short
+	 * 3	medium
+	 * 4	int
+	 * 8	long
+	 * 为其他的长度都会报错
+	 * 
+	 * 这里的参数，结合源码看看，还挺好理解的
+	 * 
 	 */
 	
 	/**
@@ -157,7 +167,7 @@ public class README_ChannelHandler {
 	 * 这个方法点进来后有个callDecode方法需要说明下。
 	 * 这里是循环使用decode抽象去解码，如果当前的ChannelHandlerContext已经被移除，则不能继续进行解码，直接退出循环；如果输出的out列表长度
 	 * 没有变化，说明解码没有成功，需要针对一下不同场景进行判断。
-	 * 1、如果用户解码器没有消费ByteBuf，则说明十个半包消息，需要由I/O线程继续读取后续的数据报，在这种场景下要退出循环
+	 * 1、如果用户解码器没有消费ByteBuf，则说明是个半包消息，需要由I/O线程继续读取后续的数据报，在这种场景下要退出循环
 	 * 2、如果用户解码器消费了ByteBuf，说明可以解码可以继续进行
 	 * 
 	 * 从这里可以看出一个问题，业务解码器需要遵守Netty的某些契约，解码器才能正常工作，否则可能会导致功能错误，最重要的契约就是：如果业务解码器认为当前
@@ -176,6 +186,54 @@ public class README_ChannelHandler {
 	 * channelRead
 	 * 里面有一个内容可以学习的样子，就是acceptInboundMessage方法中的匹配方法。
 	 * 按我的理解。。它这个是和泛型匹配的
+	 * 
+	 */
+	
+	
+	/**
+	 * LengthFieldBasedFrameDecoder 源码分析
+	 * 
+	 * 重写的那个decode为入口。若是解码成功，则将解码获得的对象输入到out列表中。
+	 * 然后看本地decode方法。
+	 * 首先，discardingTooLongFrame这个单词百度了一下，是丢弃过长帧的意思，然后，if中的代码就容易看懂了。
+	 * 
+	 * 看一下failIfNessary,可以看到bytesToDiscard需要丢弃的字段长度若为0了，则将discardingTooLongFrame置为false。
+	 * 
+	 * 然后decode中下一个if判断当前缓冲区的可读字节数和长度偏移量进行对比，如果小于长度偏移量，则说明当前缓冲区的数据报不够，需要返回空，由I/O线程继续读取
+	 * 后续的数据报。
+	 * 
+	 * 接着通过读索引和lengthFieldOffset长度参数位置偏移量计算出实际的长度字段索引，然后通过索引值获取消息报文的长度字段。然后对报文长度进行合法性验证。
+	 * 
+	 * 若是报文长度小于0，说明报文非法，跳过lengthFieldEndOffset个字节，抛出异常。
+	 * 
+	 * 通过lengthAdjustment和lengthFieldEndOffset调整报文长度，若是frameLength调整后
+	 * frameLength < lengthFieldEndOffset，说明需要调整的长度lengthAdjustment比报文长度还长，则说明是非法数据报，抛出异常。
+	 * 
+	 * 若是修正后的报文长度大于ByteBuf的最大容量，说明接收到的消息长度大于系统允许的最大长度上限，需要设置discardingTooLongFrame，计算需要丢弃
+	 * 的字节数，根据情况选择时候需要抛出解码异常。
+	 * 
+	 * 丢弃策略如下：frameLength减去ByteBuf的可读字节数就是需要丢弃的字节长度，如果需要丢弃的字节数discard小于缓冲区可读的字节数，则直接丢弃
+	 * 整包消息。如果需要丢弃的字节数大于当前的可读字节数，说明即便将当前所有可读的字节数全部丢弃，下次解码也还有需要丢弃的数据，则设置
+	 * discardingToolLongFrame标识为true，记录下次需要抛弃的数据，下次解码的时候继续丢弃，丢弃操作完成之后，调用failIfNecessary方法
+	 * 根据实际情况抛出异常。
+	 * 
+	 * 如果当前的可读字节数小于frameLength，说明是个半包消息，需要返回空，由I/O线程继续读取后去的数据报，等待下次解码。
+	 * 回头看ByteToMessageDecoder ChannelRead方法可以看到类中有个ByteBuf会累计记录传入的ByteBuf，这一套逻辑就是解决这个子类处理半包消息
+	 * 的逻辑了。
+	 * 
+	 * 对需要忽略的消息头字段进行判断，如果大于消息长度frameLength，说明码流非法，需要忽略当前的数据报，抛出CorruptedFrameException异常。通过
+	 * ByteBuf的skipBytes方法忽略消息头中不需要的字段，得到整包ByteBuf。
+	 * 
+	 * 通过extractFrame方法获取解码后的整包消息缓冲区 。
+	 * 
+	 * 返回之后更新原ByteBuf的readIndex。
+	 * 
+	 * 至此，基于长度的半包解码器介绍完毕。
+	 * 
+	 */
+	
+	/**
+	 * MessageToByteEncoder、MessageToMessageEncoder、LengthFieldPrepender
 	 * 
 	 */
 	
