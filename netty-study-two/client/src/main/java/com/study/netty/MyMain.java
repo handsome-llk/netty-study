@@ -34,7 +34,7 @@ public class MyMain {
 		// IOMain(args);
 		// NIOMain(args);
 		// AIOMain(args);
-		// NettyMain(port);
+		 NettyMain(port);
 		// DelimiterMain(port, host);
 		// FixedLengthMain(port, host);
 		// SubSerializableMain(port, host);
@@ -42,7 +42,7 @@ public class MyMain {
 		// MarshallingMain(port, host);
 		// HttpXmlMain(port, host);
 		// UdpMain(port);
-		CustomMain();
+		// CustomMain();
 	}
 	
 	/**

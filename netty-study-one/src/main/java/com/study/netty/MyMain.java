@@ -41,7 +41,7 @@ public class MyMain {
 		// IOMain(args);
 		// NIOMain(args);
 		// AIOMain(args);
-		// NettyMain(port);
+		 NettyMain(port);
 		// DelimiterMain(port);
 		// FixedLengthMain(port);
 		// SerializableMain();
@@ -55,7 +55,7 @@ public class MyMain {
 		// WebSocketMain(port);
 		// UdpMain(port);
 		// FileMain(port);
-		 CustomMain();
+		// CustomMain();
 	}
 	
 	/**
