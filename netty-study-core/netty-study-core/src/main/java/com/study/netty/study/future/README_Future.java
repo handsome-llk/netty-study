@@ -88,4 +88,15 @@ public class README_Future {
      *
      */
 
+    /**
+     * AbstractFuture 实现Future接口
+     * 这里只提两个方法get()和get(long timeout, TimeUnit unit)
+     * 一个是获取异步操作结果的代码，另一个是支持超时的代码。
+     *
+     * 拿get()来说明。
+     * 首先调用await()方法进行无限期阻塞，当I/O操作完成后会被notify()。程序继续向下执行，检查I/O
+     * 操作是否发生了异常，如果没有异常，则通过getNow()方法获取结果并返回。否则抛出异常
+     *
+     */
+
 }
