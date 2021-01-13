@@ -7,6 +7,5 @@ import io.netty.util.concurrent.Promise;
 
 public class TestPromise {
     public static void main(String[] args) {
-        DefaultPromise
     }
 }
